@@ -49,6 +49,6 @@ device.ConnectDevice()
 device.Push('./system.img', '/sdcard/system.img')
 print('DO NOT DISCONNECT OR REBOOT PHONE')
 
-print(device.Shell('rm -rf /mnt/{};mkdir /mnt/{};mount -o loop -t auto /sdcard/system.img /mnt/{};rm -rf /system/{};mkdir /system/{};cp -af /mnt/{} /system'))
+print(device.Shell('rm -rf /mnt/{};mkdir /mnt/{};mount -o loop -t auto /sdcard/system.img /mnt/{};rm -rf /system/{};mkdir /system/{};cp -af /mnt/{} /system'.format(input('Please type either a or b and press enter'))))
 
 print('if the above was succesful or blank, it worked!')
