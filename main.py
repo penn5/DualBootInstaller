@@ -27,7 +27,7 @@ import zipfile
 #uncompress zip
 with zipfile.ZipFile('rom.zip', 'r') as zip:
     zip.extractall('rom')
-if os.path.isfile('rom/system.new.data.br')
+if os.path.isfile('rom/system.new.data.br'):
     data = brotli.decompress(open('rom/system.new.dat.br', 'rb'))
     with open('rom/system.new.dat', 'wb') as f:
         f.write(data)
