@@ -17,7 +17,7 @@
 import os
 print('This script expects to find a file "rom.zip" in the cwd')
 print('This file requires the following modules from pypi')
-print('brotli')
+print('brotlipy')
 import brotli
 print('zipfile')
 import zipfile
@@ -29,6 +29,7 @@ with zipfile.ZipFile('rom.zip', 'r') as zip:
     zip.extractall('rom')
 if os.path.isfile('rom/system.new.data.br'):
     data = brotli.decompress(open('rom/system.new.dat.br', 'rb'))
+    print(data)
     with open('rom/system.new.dat', 'wb') as f:
         f.write(data)
 
