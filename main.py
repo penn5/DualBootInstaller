@@ -27,11 +27,20 @@ import zipfile
 #uncompress zip
 with zipfile.ZipFile('rom.zip', 'r') as zip:
     zip.extractall('rom')
-if os.path.isfile('rom/system.new.data.br'):
-    data = brotli.decompress(open('rom/system.new.dat.br', 'rb'))
-    print(data)
-    with open('rom/system.new.dat', 'wb') as f:
-        f.write(data)
+if os.path.isfile('rom/system.new.dat.br'):
+#    data=open('rom/system.new.dat.br', 'rb').read()
+#    data = brotli.decompress(data)
+    d = brotli.Decompressor()
+    f=open('rom/system.new.dat.br', 'rb')
+    f2=open('rom/system.new.dat', 'wb')
+    dat=f.read(128) #128mb
+    while len(dat):
+        f2.write(d.decompress(dat))
+        dat=f.read(128)
+    d.finish()
+#    print(data)
+#    with open('rom/system.new.dat', 'wb') as f:
+#        f.write(data)
 
 print('decompressed brotli')
 
@@ -50,6 +59,6 @@ device.ConnectDevice()
 device.Push('./system.img', '/sdcard/system.img')
 print('DO NOT DISCONNECT OR REBOOT PHONE')
 
-print(device.Shell('rm -rf /mnt/{0};mkdir /mnt/{0};mount -o loop -t auto /sdcard/system.img /mnt/{0};rm -rf /system/{0};mkdir /system/{0};cp -af /mnt/{0} /system'.format(input('Please type either a or b and press enter'))))
+print(device.Shell('rm -rf /mnt/{0};mkdir /mnt/{0};mount -o loop -t auto /sdcard/system.img /mnt/{0};rm -rf /system/{0};mkdir /system/{0};cp -af /mnt/{0} /system/{0}'.format(input('Please type either a or b and press enter'))))
 
 print('if the above was succesful or blank, it worked!')
